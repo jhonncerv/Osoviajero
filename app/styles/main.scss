@@ -1,8 +1,68 @@
 $icon-font-path: '../fonts/';
 
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+// =============================================================================
+// String Replace
+// =============================================================================
+
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+// =============================================================================
+// Font Face
+// =============================================================================
+
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
+  $src: null;
+
+  $extmods: (
+          eot: "?",
+          svg: "#" + str-replace($name, " ", "_")
+  );
+
+  $formats: (
+          otf: "opentype",
+          ttf: "truetype"
+  );
+
+  @each $ext in $exts {
+    $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+    $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+    $src: append($src, url(quote($path + "." + $extmod)) format(quote($format)), comma);
+  }
+
+  @font-face {
+    font-family: quote($name);
+    font-style: $style;
+    font-weight: $weight;
+    src: $src;
+  }
+}
+
 // bower:scss
-@import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+@import "bower_components/juice/dist/_juice.scss";
 // endbower
+
+@include font-face ('Avenir', $icon-font-path + 'AvenirNextLTPro-Bold', 'bold', 'normal','ttf, eot, otf');
+@include font-face ('Avenir', $icon-font-path + 'AvenirNextLTPro-Regular', '400', 'normal','ttf, eot, otf');
+@include font-face ('Avenir', $icon-font-path + 'AvenirNextLTPro-It', '400', 'italic','ttf, eot, otf');
 
 .browserupgrade {
   margin: 0.2em 0;
@@ -11,83 +71,97 @@ $icon-font-path: '../fonts/';
   padding: 0.2em 0;
 }
 
+$fondo: #f9e6db;
+$texto: black;
+$cita: #a6b2a8;
 /* Space out content a bit */
 body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  background: $fondo;
+  font-family: 'Avenir';
+  color: $texto;
+  line-height: 1.55;
+}
+section {
+  @include clearfix();
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-  padding-left: 15px;
-  padding-right: 15px;
+blockquote {
+  border-color: $fondo;
+  font-size: .93em;
+  margin: 35px 0 20px;
 }
 
-/* Custom page header */
-.header {
-  border-bottom: 1px solid #e5e5e5;
+p {
+  margin: 0 0 20px;
+  font-size: .93em;
+}
 
-  /* Make the masthead heading the same height as the navigation */
-  h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
+.capitulo {
+  &__wrap {
+    position: relative;
+    background: white;
+    padding: 15px;
+    min-height: 100vh;
+    @include bp(medium-up){
+      width: 33%;
+      float: left;
+    }
   }
-}
-
-/* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
-}
-
-.container-narrow > hr {
-  margin: 30px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-  .btn {
-    font-size: 21px;
-    padding: 14px 24px;
+  &__tittle {
+    margin: 20px 0;
+    position: relative;
+    h1 {
+      font-weight: bold;
+      font-size: 35px;
+    }
+    @include bp(medium-up){
+      margin: 40px 0;
+      padding: 0 20px 0 70px;
+      h1 {
+        font-size: 48px;
+      }
+    }
   }
-}
-
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-  p + h4 {
-    margin-top: 28px;
+  &__pleca,
+  &__letra,
+  &__globo{
+    position: absolute;
   }
-}
-
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 730px;
+  &__globo {
+    z-index: 1;
+    left: 3px;
+    top: -36px;
+    max-width: 36px;
   }
-
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
+  &__pleca {
+    z-index: 1;
+    left: 0;
+    top:10px;
   }
-
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
+  &__letra {
+    max-height: 80px;
+    top: -20px;
+    left: -15px;
   }
-
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
+  &__texto {
+    margin: 5px 0;
+    padding: 0 60px 0 70px;
+    text-align: justify;
+  }
+  &__ilustracion {
+    text-align: center;
+    img {
+      display: inline-block;
+      margin: 40px 20px;
+    }
+  }
+  &--cita {
+    color: $cita;
+    text-transform: uppercase;
+    font-size: 1.14em;
+  }
+  &--baja {
+    left: -10px;
+    top: 10px;
   }
 }
