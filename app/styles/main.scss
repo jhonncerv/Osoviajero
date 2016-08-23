@@ -1,16 +1,5 @@
 $icon-font-path: '../fonts/';
 
-@mixin clearfix() {
-  &:before,
-  &:after {
-    content: " "; // 1
-    display: table; // 2
-  }
-  &:after {
-    clear: both;
-  }
-}
-
 // =============================================================================
 // String Replace
 // =============================================================================
@@ -155,6 +144,25 @@ p {
       margin: 40px 20px;
     }
   }
+  &__hold {
+    float: right;
+    width: 67%;
+    min-height: 100vh;
+    position: relative;
+  }
+  &__ilustra {
+    @include coverer;
+  }
+  &__ilustra:before {
+    content: ' ';
+    width: 60%;
+    height: 60%;
+    background: -moz-radial-gradient(center, ellipse cover, rgb(255, 242, 235) 0%, rgba(255, 242, 235, 0.2) 45%, rgba(125, 185, 232, 0) 100%);
+    background: -webkit-radial-gradient(center, ellipse cover, rgb(255, 242, 235) 0%, rgba(255, 242, 235, 0.2) 45%, rgba(125, 185, 232, 0) 100%);
+    background: radial-gradient(ellipse at center, rgb(255, 242, 235) 0%, rgba(255, 242, 235, 0.2) 45%, rgba(125, 185, 232, 0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff2eb', endColorstr='#007db9e8',GradientType=1 );
+    @include centerer;
+  }
   &--cita {
     color: $cita;
     text-transform: uppercase;
@@ -163,5 +171,9 @@ p {
   &--baja {
     left: -10px;
     top: 10px;
+  }
+  &--anima {
+    position: absolute;
+    @include centerer;
   }
 }
