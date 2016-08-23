@@ -1,5 +1,4 @@
 $(function () {
-    console.log('\'Allo \'Allo!');
     var alto = window.innerHeight;
     var $cap1 = $('#capitulo__1'),
         $cap2 = $('#capitulo__2'),
@@ -49,6 +48,21 @@ $(function () {
             })
                 .setClassToggle(".animx_"+i, "active")
                 .addIndicators()
+                .on("enter leave", function (e) {
+                    setTimeout(function () {
+
+                        var $letra = $(".letra");
+
+                        $letra.each(function (i,e) {
+                            new ScrollMagic.Scene({
+                                triggerElement: "#capitulo__" + Math.ceil((i+1)/2),
+                                duration: $(this).parents('.capitulo').height()
+                            })
+                                .setTween($(this), { top : '-=15%' })
+                                .addTo(controller);
+                    },500);
+                    console.log(e, e.type == "enter" ? "inside" : "outside");
+                })
                 .addTo((controllerLa));
             new ScrollMagic.Scene({
                 triggerElement: "#capitulo__"+i,
@@ -75,6 +89,31 @@ $(function () {
                 .setTween(this, { x:'0%',  opacity: 1 })
                 .addTo(controllerEn);
         });
+
+        TweenMax.set(".capitulo__pleca", { x : '-=20%', opacity : 0 });
+        var $Tituimg = $(".capitulo__pleca");
+        $Tituimg.each(function (e) {
+            new ScrollMagic.Scene({ triggerElement: this, duration: alto/2 })
+                .setTween(this, { x : '0%',  opacity: 1 })
+                .addTo(controllerEn);
+        });
+
+        TweenMax.set(".capitulo__letra", { x : '-=70%', opacity : 0 });
+        var $Tituimg = $(".capitulo__letra");
+        $Tituimg.each(function (e) {
+            new ScrollMagic.Scene({ triggerElement: this, duration: alto/2 })
+                .setTween(this, { x : '0%',  opacity: 1 })
+                .addTo(controllerEn);
+        });
+        TweenMax.set(".capitulo__globo", { y : '-=60%', opacity : 0 });
+        var $Tituimg = $(".capitulo__globo");
+        $Tituimg.each(function (e) {
+            new ScrollMagic.Scene({ triggerElement: this, duration: alto })
+                .setTween(this, { y : '+=120%',  opacity: 1 })
+                .addTo(controllerEn);
+        });
+        });
+
     });
 
 });
