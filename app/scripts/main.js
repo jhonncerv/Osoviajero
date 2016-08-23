@@ -60,6 +60,7 @@ $(function () {
                             })
                                 .setTween($(this), { top : '-=15%' })
                                 .addTo(controller);
+                        });
                     },500);
                     console.log(e, e.type == "enter" ? "inside" : "outside");
                 })
@@ -111,7 +112,6 @@ $(function () {
             new ScrollMagic.Scene({ triggerElement: this, duration: alto })
                 .setTween(this, { y : '+=120%',  opacity: 1 })
                 .addTo(controllerEn);
-        });
         });
 
     });
