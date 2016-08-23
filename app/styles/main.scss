@@ -94,6 +94,7 @@ p {
     @include bp(medium-up){
       width: 33%;
       float: left;
+      padding-bottom: 500px;
     }
   }
   &__tittle {
@@ -150,6 +151,9 @@ p {
     min-height: 100vh;
     position: relative;
   }
+  &__wrapGrph {
+    height: 100vh;
+  }
   &__ilustra {
     @include coverer;
   }
@@ -174,6 +178,107 @@ p {
   }
   &--anima {
     position: absolute;
+    transition: .5s all;
     @include centerer;
+  }
+}
+.animx_1 {
+  &:nth-child(1){
+    top: 40%;
+    left: 25%;
+  }
+  &:nth-child(2){
+    top: 30%;
+    left: 80%;
+  }
+  &:nth-child(6){
+    top: 70%;
+    left: 60%;
+  }
+  &:nth-child(3){
+    top: 30%;
+    left: 30%;
+  }
+  &:nth-child(4){
+    top: 40%;
+  }
+  &:nth-child(5){
+    top: 65%;
+    left: 70%;
+  }
+  &:nth-child(7){
+    top: 30%;
+    left: 32%;
+  }
+  &:nth-child(8){
+    top: 58%;
+    left: 77%;
+  }
+}
+.animx_2 {
+  &:nth-child(1){
+    top: 40%;
+    left: 65%;
+  }
+  &:nth-child(2){
+    top: 45%;
+  }
+  &:nth-child(3){
+    left: 59%;
+    top:62%;
+  }
+  &:nth-child(4){
+    left: 67%;
+    top: 50%;
+  }
+  &:nth-child(6){
+    left: 39%;
+    top:53.5%;
+  }
+  &:nth-child(5){
+    left: 45.5%;
+    top: 41%;
+  }
+  &:nth-child(7){
+    left: 46%;
+    top: 53.5%;
+  }
+  &:nth-child(8){
+    left: 63%;
+    top: 54%;
+  }
+}
+.animx_3 {
+  &:nth-child(1){
+    left: 42%;
+    top: 48%;
+  }
+  &:nth-child(2){
+    left: 37%;
+    top: 64%;
+  }
+  &:nth-child(3){
+    left: 67%;
+    top: 57%;
+  }
+  &:nth-child(4){
+    left: 50%;
+    top: 36%;
+  }
+  &:nth-child(5){
+    top: 45%;
+    left: 55%;
+  }
+  &:nth-child(6){
+    top: 58%;
+    left: 57.5%;
+  }
+  &:nth-child(7){
+    top: 57%;
+    left: 54%;
+  }
+  &:nth-child(8){
+    top: 30%;
+    left: 35%;
   }
 }
