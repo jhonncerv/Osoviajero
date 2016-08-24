@@ -1,4 +1,5 @@
 
+var control;
 $(function () {
     var alto = window.innerHeight;
     var $cap1 = $('#capitulo__1'),
@@ -16,7 +17,6 @@ $(function () {
         }
     });
     var controllerLa = new ScrollMagic.Controller();
-    var control;
 
     var $sceneL = [], $sceneN = [], $sceneG = [];
     var $letra = $('.letra');
@@ -31,7 +31,7 @@ $(function () {
             $(this).css('transition', 'none');
             $sceneL[i] = new ScrollMagic.Scene({
                 triggerElement: '#capitulo__' + Math.ceil((i+1)/2),
-                duration: $(this).parents('.capitulo').height()
+                duration: $(this).parents('.capitulo').height()-100
             })
                 .addIndicators({ name: 'letra' + i + ' (duration: ' + $(this).parents('.capitulo').height() + ')' })
                 .setTween($(this), { top : '-=10%' })
@@ -63,7 +63,7 @@ $(function () {
             })
             .setTween($(this), { left : (i==1?'-':'+')+'=10%', top: (i==1?'-':'+')+'=5%' })
             .addTo(control);
-        })
+        });
     }
 
     $(document).ready(function () {
@@ -98,13 +98,22 @@ $(function () {
             .setClassToggle('.animx_'+i, 'active')
             .addIndicators()
             .on('enter leave', function (e) {
-                //console.log(e.type == "enter" ? "inside" : "outside");
+                console.log(e.type == "enter" ? "inside" : "outside");
                 if (e.type == 'enter'){
                     $('.letra, .nube, .globo, .abre').css('transition', '.5s all ease-out .5s');
                     setTimeout( animaciones, 1200 );
                 } else {
-                    control.destroy(true);
+                    console.log(control);
+                    if(typeof control != 'undefined' && control != null && undefined != control ){
+                        control.destroy(true);
+                        console.log('destruido');
+                    }
                     control = null;
+                    console.log(control);
+                    $($sceneL).each(function () {
+                       this.destroy(true);
+                    });
+                    $sceneL = $sceneN = $sceneG = null;
                     $sceneL = $sceneN = $sceneG = [];
                     $('.letra, .nube, .globo, .abre').css('transition', '.5s all ease-out');
                 }
