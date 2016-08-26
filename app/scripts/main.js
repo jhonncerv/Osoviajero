@@ -1,30 +1,30 @@
-
 $(function () {
-
     window.scrollTo(0,0);
-    var alto = window.innerHeight;
-    var control;
-
-    var controller = new ScrollMagic.Controller({
-        globalSceneOptions: {
-            triggerHook: 'onLeave'
-        }
-    });
-    var controllerEn = new ScrollMagic.Controller({
-        globalSceneOptions: {
-            triggerHook: 'onEnter'
-        }
-    });
-    var controllerLa = new ScrollMagic.Controller();
-
-    var $sceneL = [], $sceneN = [], $sceneG = [];
+    var alto = window.innerHeight, control, $sceneL = [], $sceneN = [], $sceneG = [];
+    TweenMax.set('main', { opacity : 1 });
+    TweenMax.set('.capitulo__wrap', { opacity : 0, x : '-=100%' });
+    TweenMax.set('.capitulo__globo', { y : '-=60%', opacity : 0 });
+    TweenMax.set('.capitulo__letra', { x : '-=70%', opacity : 0 });
+    TweenMax.set('.capitulo__pleca', { x : '-=20%', opacity : 0 });
+    TweenMax.set('.capitulo h1', { y : '-=20%', opacity : 0 });
+    TweenMax.set('.capitulo__ilustracion img:first-child', { x : '-=40%', opacity: 0 });
+    TweenMax.set('.capitulo__ilustracion img:last-child', { x : '+=40%', opacity: 0 });
+    TweenMax.set('.capitulo__texto p, .capitulo__texto blockquote', { y : '+=20%', opacity: 0 });
 
     var app = {
         init: function () {
             this.cache();
-            this.descktop();
+            if(window.innerWidth > 790)
+                this.desktop();
+            else
+                this.mobile();
         },
         cache: function () {
+            var controllerEn = new ScrollMagic.Controller({
+                globalSceneOptions: {
+                    triggerHook: 'onEnter'
+                }
+            });
             $('.capitulo__texto p, .capitulo__texto blockquote').each(function (e) {
                 new ScrollMagic.Scene({ triggerElement: this, duration: alto/2 })
                     .setTween(this, { y:'-=20%',  opacity: 1 })
@@ -52,6 +52,9 @@ $(function () {
                     .setTween(this, { y : '+=120%',  opacity: 1 })
                     .addTo(controllerEn);
             });
+            setTimeout(function () {
+                $('#capitulo__1 .capitulo__texto p, #capitulo__1 .capitulo__texto blockquote').css('transition', 'none');
+            },5000);
         },
         animaciones: function (dur) {
             control  = new ScrollMagic.Controller({
@@ -65,7 +68,7 @@ $(function () {
                     triggerElement: '#capitulo__' + Math.ceil((i+1)/2),
                     duration: $(this).parents('.capitulo').height() - dur
                 })
-                    .addIndicators({ name: 'letra' + i + ' (duration: ' + $(this).parents('.capitulo').height() + ')' })
+                    //.addIndicators({ name: 'letra' + i + ' (duration: ' + $(this).parents('.capitulo').height() + ')' })
                     .setTween($(this), { top : '-=10%' })
                     .addTo(control);
             });
@@ -97,8 +100,14 @@ $(function () {
                     .addTo(control);
             });
         },
-        descktop: function () {
+        desktop: function () {
             var $cap, $app = this;
+            var controller = new ScrollMagic.Controller({
+                globalSceneOptions: {
+                    triggerHook: 'onLeave'
+                }
+            });
+            var controllerLa = new ScrollMagic.Controller();
 
             var scene = [], dur;
             for(var i = 1; i < 4; i++) {
@@ -109,7 +118,7 @@ $(function () {
                     duration: $cap.find('.capitulo__wrap').innerHeight() - alto
                 })
                     .setPin('#capitulo__' + i + ' .capitulo__wrapGrph')
-                    .addIndicators({ name: i + ' pin (duration: 300)' })
+                    //.addIndicators({ name: i + ' pin (duration: 300)' })
                     .addTo(controller);
 
                 new ScrollMagic.Scene({
@@ -117,9 +126,9 @@ $(function () {
                     duration: $cap.find('.capitulo__wrap').innerHeight() - dur
                 })
                     .setClassToggle('.animx_'+i, 'active')
-                    .addIndicators()
+                    //.addIndicators()
                     .on('enter leave', function (e) {
-                        console.log(e.type == "enter" ? "inside" : "outside");
+                        console.log(e.type == 'enter' ? 'inside' : 'outside');
                         if (e.type == 'enter'){
                             $('.letra, .nube, .globo, .abre').css('transition', '.5s all ease-out .5s');
                             setTimeout( function () {
@@ -147,21 +156,22 @@ $(function () {
                     duration: $cap.find('.capitulo__wrap').innerHeight() - (i<3?alto/2:200)
                 })
                     .setClassToggle('#capitulo__'+i, 'hover')
-                    .addIndicators()
+                    //.addIndicators()
                     .addTo((i==1?controller:controllerLa));
             }
+        },
+        mobile: function () {
+            var controllerLa = new ScrollMagic.Controller();
+            for(var i = 1; i < 4; i++) {
+                new ScrollMagic.Scene({
+                    triggerElement: '#capitulo__' + i + ' .capitulo__hold',
+                    duration: alto
+                })
+                    .setClassToggle('.animx_'+i, 'active')
+                    .addTo((controllerLa));
+            }
         }
-
     };
-
-    TweenMax.set('.capitulo__wrap', { opacity : 0, x : '-=100%' });
-    TweenMax.set('.capitulo__globo', { y : '-=60%', opacity : 0 });
-    TweenMax.set('.capitulo__letra', { x : '-=70%', opacity : 0 });
-    TweenMax.set('.capitulo__pleca', { x : '-=20%', opacity : 0 });
-    TweenMax.set('.capitulo h1', { y : '-=20%', opacity : 0 });
-    TweenMax.set('.capitulo__ilustracion img:first-child', { x : '-=40%', opacity: 0 });
-    TweenMax.set('.capitulo__ilustracion img:last-child', { x : '+=40%', opacity: 0 });
-    TweenMax.set('.capitulo__texto p, .capitulo__texto blockquote', { y : '+=20%', opacity: 0 });
 
     $(document).ready(function () {
 
