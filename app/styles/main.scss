@@ -401,3 +401,6 @@ p {
     left: 35%;
   }
 }
+#capitulo__1 .capitulo__texto p, #capitulo__1 .capitulo__texto blockquote {
+  transition: .6s all ease-in;
+}
