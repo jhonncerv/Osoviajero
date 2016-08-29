@@ -55,6 +55,10 @@ $(function () {
             setTimeout(function () {
                 $('#capitulo__1 .capitulo__texto p, #capitulo__1 .capitulo__texto blockquote').css('transition', 'none');
             },5000);
+            $('.scroll2Top span').click(function(){
+                $('html,body').animate({ scrollTop: 0 }, 'slow');
+                return false;
+            });
         },
         animaciones: function (dur) {
             control  = new ScrollMagic.Controller({
@@ -118,7 +122,6 @@ $(function () {
                     duration: $cap.find('.capitulo__wrap').innerHeight() - alto
                 })
                     .setPin('#capitulo__' + i + ' .capitulo__wrapGrph')
-                    //.addIndicators({ name: i + ' pin (duration: 300)' })
                     .addTo(controller);
 
                 new ScrollMagic.Scene({
@@ -126,7 +129,6 @@ $(function () {
                     duration: $cap.find('.capitulo__wrap').innerHeight() - dur
                 })
                     .setClassToggle('.animx_'+i, 'active')
-                    //.addIndicators()
                     .on('enter leave', function (e) {
                         console.log(e.type == 'enter' ? 'inside' : 'outside');
                         if (e.type == 'enter'){
@@ -156,7 +158,6 @@ $(function () {
                     duration: $cap.find('.capitulo__wrap').innerHeight() - (i<3?alto/2:200)
                 })
                     .setClassToggle('#capitulo__'+i, 'hover')
-                    //.addIndicators()
                     .addTo((i==1?controller:controllerLa));
             }
         },
@@ -175,6 +176,7 @@ $(function () {
 
     $(document).ready(function () {
 
+        window.scrollTo(0,0);
         var tlIntro = new TimelineMax({ onComplete: $.proxy( app.init, app ) })
             .to('.capitulo__wrap', 2, { opacity: 1, x : '+=100%'}, '+=.5s')
             .to('#capitulo__1 .capitulo__pleca', 1, { x : '0%',  opacity: 1 }, '-=.5')
