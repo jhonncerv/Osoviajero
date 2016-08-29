@@ -130,7 +130,6 @@ $(function () {
                 })
                     .setClassToggle('.animx_'+i, 'active')
                     .on('enter leave', function (e) {
-                        console.log(e.type == 'enter' ? 'inside' : 'outside');
                         if (e.type == 'enter'){
                             $('.letra, .nube, .globo, .abre').css('transition', '.5s all ease-out .5s');
                             setTimeout( function () {
@@ -138,12 +137,9 @@ $(function () {
                             }, 1200 );
                         } else {
                             console.log(control);
-                            if(typeof control != 'undefined' && control != null && undefined != control ){
+                            if(typeof control != 'undefined' && control != null && undefined != control )
                                 control.destroy(true);
-                                console.log('destruido');
-                            }
                             control = null;
-                            console.log(control);
                             $($sceneL).each(function () {
                                 this.destroy(true);
                             });
