@@ -64,6 +64,7 @@ $fondo: #f9e6db;
 $texto: black;
 $cita: #a6b2a8;
 /* Space out content a bit */
+html,
 body {
   background: $fondo;
   font-family: 'Avenir';
@@ -71,7 +72,6 @@ body {
   line-height: 1.55;
 }
 main {
-  overflow: hidden;
   opacity: 0;
   position: relative;
 }
@@ -88,6 +88,13 @@ blockquote {
 p {
   margin: 0 0 20px;
   font-size: .93em;
+}
+
+.overfullhidden {
+  overflow: visible!important;
+}
+.overflow {
+  overflow: hidden!important;
 }
 
 .capitulo {
@@ -187,7 +194,7 @@ p {
     content: ' ';
     width: 80%;
     height: 80%;
-    transition: background-color 1s ease-out 1s;
+    transition: background-color 1.5s ease-out 1s;
     background: #f9e6db;
     @include centerer;
   }

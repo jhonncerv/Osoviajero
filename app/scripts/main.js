@@ -111,11 +111,17 @@ $(function () {
                     triggerHook: 'onLeave'
                 }
             });
+            var controllerAnima = new ScrollMagic.Controller({
+                globalSceneOptions: {
+                    triggerHook: 'onLeave',
+                    offset: -alto/2
+                }
+            });
             var controllerLa = new ScrollMagic.Controller();
 
             var scene = [], dur;
             for(var i = 1; i < 4; i++) {
-                dur = (i<3?alto/2:200);
+                dur = (i<3?(alto/alto):200);
                 $cap = $('#capitulo__' + i );
                 scene[i-1] = new ScrollMagic.Scene({
                     triggerElement: '#capitulo__' + i,
@@ -136,7 +142,6 @@ $(function () {
                                 $app.animaciones(dur);
                             }, 1200 );
                         } else {
-                            console.log(control);
                             if(typeof control != 'undefined' && control != null && undefined != control )
                                 control.destroy(true);
                             control = null;
@@ -148,7 +153,8 @@ $(function () {
                             $('.letra, .nube, .globo, .abre').css('transition', '.5s all ease-out');
                         }
                     })
-                    .addTo((controllerLa));
+                    //.addIndicators({ name: 'anima' + i })
+                    .addTo((i==1?controllerLa:controllerAnima));
                 new ScrollMagic.Scene({
                     triggerElement: '#capitulo__'+i,
                     duration: $cap.find('.capitulo__wrap').innerHeight() - (i<3?alto/2:200)
